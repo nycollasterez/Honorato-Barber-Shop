@@ -61,9 +61,10 @@
       *, *::before, *::after {
         box-sizing: border-box;
       }
-      /* Fundo solido do cabecalho na cor oficial do site sem alterar layout ou estrutura */
+      /* Efeito vidro fosco do cabecalho com backdrop-blur ativo ao rolar */
       #main-navbar {
-        background-color: #0B0B0B !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
       }
       /* Espacamento do cabecalho duplo garantido para todas as abas fora a home */
       main.site-content-page.view-not-home {
