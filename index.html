@@ -96,6 +96,40 @@
         pointer-events: none !important;
         filter: drop-shadow(0 10px 35px rgba(0,0,0,0.85)) !important;
       }
+      /* Ajuste especifico para celular: sobe a caveira e o titulo HONORATO sem alterar o computador */
+      @media (max-width: 768px) {
+        #hero {
+          min-height: calc(100svh - 96px) !important;
+          min-height: calc(100vh - 96px) !important;
+          padding-top: 1rem !important;
+          padding-bottom: 2rem !important;
+          align-items: center !important;
+          justify-content: center !important;
+        }
+        .hero-content-container {
+          transform: translateY(-28px) !important;
+        }
+        .hero-title-box {
+          margin-top: 0 !important;
+          margin-bottom: 0.5rem !important;
+        }
+        .hero-skull-mask {
+          width: clamp(230px, 72vw, 360px) !important;
+          height: clamp(230px, 72vw, 360px) !important;
+          top: 45% !important;
+          transform: translate(-50%, -50%) !important;
+        }
+        .hero-giant-title {
+          font-size: clamp(3.2rem, 16vw, 5.2rem) !important;
+        }
+        .hero-subtitle {
+          font-size: clamp(1.05rem, 4.4vw, 1.4rem) !important;
+          margin-top: 0.5rem !important;
+        }
+        .hero-buttons-container {
+          margin-top: 1.5rem !important;
+        }
+      }
       /* Efeito vidro fosco do cabecalho com backdrop-blur ativo ao rolar */
       #main-navbar {
         backdrop-filter: blur(12px) !important;
