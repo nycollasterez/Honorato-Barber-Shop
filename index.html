@@ -61,6 +61,23 @@
       *, *::before, *::after {
         box-sizing: border-box;
       }
+      /* Espacamento do cabecalho garantido para todas as abas fora a home */
+      main.site-content-page.view-not-home {
+        padding-top: 145px !important;
+      }
+      @media (min-width: 768px) {
+        main.site-content-page.view-not-home {
+          padding-top: 120px !important;
+        }
+      }
+      @media (min-width: 1024px) {
+        main.site-content-page.view-not-home {
+          padding-top: 110px !important;
+        }
+      }
+      main.site-content-page.view-home {
+        padding-top: 0 !important;
+      }
     </style>
   </head>
   <body>

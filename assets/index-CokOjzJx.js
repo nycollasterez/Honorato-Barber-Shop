@@ -468,10 +468,7 @@ Error generating stack: `+c.message+`
     {label:"Serviços",sub:"Cortes & Barba",id:"nav-services",action:()=>{d("home");setTimeout(()=>{var v;return(v=document.getElementById("services"))==null?void 0:v.scrollIntoView({behavior:"smooth"})},100)},active:!1},
     {label:"Visagismo",sub:"Consultoria",id:"nav-visagismo",badge:"Exclusivo",action:()=>{d("visagismo");window.scrollTo({top:0,behavior:"smooth"})},active:u==="visagismo"},
     {label:"Cursos",sub:"Academy EAD",id:"nav-courses",badge:"EAD",action:()=>{d("courses");window.scrollTo({top:0,behavior:"smooth"})},active:u==="courses"},
-    {label:"Equipe",sub:"Barbeiros",id:"nav-team",action:()=>{d("home");setTimeout(()=>{var v;return(v=document.getElementById("team"))==null?void 0:v.scrollIntoView({behavior:"smooth"})},100)},active:!1},
-    {label:"Loja",sub:"Home Care",id:"nav-store",action:()=>{d("home");setTimeout(()=>{var v;return(v=document.getElementById("store"))==null?void 0:v.scrollIntoView({behavior:"smooth"})},100)},active:!1},
-    {label:"Drinks",sub:"Bar Lounge",id:"nav-drinks",action:()=>{d("home");setTimeout(()=>{var v;return(v=document.getElementById("drinks"))==null?void 0:v.scrollIntoView({behavior:"smooth"})},100)},active:!1},
-    {label:"Localização",sub:"Como Chegar",id:"nav-location",action:()=>{d("home");setTimeout(()=>{var v;return(v=document.getElementById("location"))==null?void 0:v.scrollIntoView({behavior:"smooth"})},100)},active:!1}
+    {label:"Equipe",sub:"Barbeiros",id:"nav-team",action:()=>{d("home");setTimeout(()=>{var v;return(v=document.getElementById("team"))==null?void 0:v.scrollIntoView({behavior:"smooth"})},100)},active:!1}
   ];
 
   const handleDashboard=()=>{
@@ -485,7 +482,7 @@ Error generating stack: `+c.message+`
 
   return s.jsxs("header",{className:"fixed top-0 left-0 right-0 z-50 bg-[#0B0B0B]/60 backdrop-blur-md border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)] transition-all",id:"main-navbar",children:[
     s.jsx("div",{className:`w-full px-4 sm:px-6 lg:px-8 transition-all duration-300 ${isScrolled?"hidden md:block":"block"}`,children:s.jsxs("div",{className:"flex items-center justify-between h-20 gap-3 w-full",children:[
-      s.jsxs("div",{className:"flex items-center gap-2.5 sm:gap-3 cursor-pointer hover:opacity-90 transition-opacity min-w-0 shrink",onClick:()=>{d("home");window.scrollTo({top:0,behavior:"smooth"})},id:"nav-logo",children:[
+      s.jsxs("div",{className:"flex items-center gap-2.5 sm:gap-3 cursor-pointer hover:opacity-90 transition-opacity shrink-0 flex-none select-none z-10",onClick:()=>{d("home");window.scrollTo({top:0,behavior:"smooth"})},id:"nav-logo",children:[
         s.jsx(ND,{className:"h-9 w-9 sm:h-10 sm:w-10 transition-transform hover:scale-105 duration-300 shrink-0"}),
         s.jsxs("div",{className:"min-w-0",children:[
           s.jsxs("span",{className:"font-sans font-bold text-base sm:text-lg tracking-wider text-white whitespace-nowrap block leading-tight",children:[
@@ -497,7 +494,7 @@ Error generating stack: `+c.message+`
       ]}),
 
       // DESKTOP & LAPTOP SHORTCUTS (VISIBLE FROM MD UP: 768px+)
-      s.jsx("div",{className:"hidden md:flex items-center bg-[#141414]/95 border border-neutral-800 rounded-full px-2 py-1 shadow-xl shadow-black/40 gap-1 lg:gap-1.5",children:navShortcuts.map((item,idx)=>s.jsxs("button",{
+      s.jsx("div",{className:"hidden lg:flex items-center bg-[#141414]/95 border border-neutral-800 rounded-full px-2 py-1 shadow-xl shadow-black/40 gap-1 shrink min-w-0",children:navShortcuts.map((item,idx)=>s.jsxs("button",{
         key:item.id,
         onClick:item.action,
         className:`px-2.5 lg:px-3.5 py-1.5 rounded-full text-xs lg:text-[13px] font-medium transition-all duration-200 cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
@@ -1426,7 +1423,7 @@ Cobrança recorrente Asaas`,value:Me,onChange:k=>ut(k.target.value),className:"w
 
 Reservamos os produtos para você. Por favor, faça a retirada e o pagamento diretamente no caixa da Honorato Barber Shop.`),t("client-dashboard"))},R=$=>{if(!j)return;const U={...j,status:"Concluido"};ge.addOrder(U),A([]),x(!1),w(!1);const ue=$.method==="pix"?"via Pix":`via Cartão de Crédito (fim ${$.last4||"••••"})`;alert(`Seu pagamento ${ue} foi aprovado com sucesso!
 
-Seu pedido #${U.id} foi registrado como PAGO e já está sendo preparado pela equipe da Honorato Barber Shop para retirada rápida!`),t("client-dashboard")},V=()=>{alert("Seu agendamento foi computado com sucesso no sistema da Honorato Barber Shop! Aguardamos você!"),r&&r.role==="client"&&t("client-dashboard")};return s.jsxs("div",{className:"bg-[#0B0B0B] min-h-screen text-white relative w-full max-w-full overflow-x-hidden",children:[s.jsx(X_,{session:r,cartCount:S.reduce(($,U)=>$+U.quantity,0),onOpenBooking:()=>l(!0),onOpenAuth:E,onOpenCart:()=>x(!0),onLogout:D,currentView:e,setView:t}),s.jsxs("main",{className:(e==="home"?"pt-0":"pt-36 sm:pt-40 md:pt-36 lg:pt-32")+" w-full max-w-full min-h-screen",children:[
+Seu pedido #${U.id} foi registrado como PAGO e já está sendo preparado pela equipe da Honorato Barber Shop para retirada rápida!`),t("client-dashboard")},V=()=>{alert("Seu agendamento foi computado com sucesso no sistema da Honorato Barber Shop! Aguardamos você!"),r&&r.role==="client"&&t("client-dashboard")};return s.jsxs("div",{className:"bg-[#0B0B0B] min-h-screen text-white relative w-full max-w-full overflow-x-hidden",children:[s.jsx(X_,{session:r,cartCount:S.reduce(($,U)=>$+U.quantity,0),onOpenBooking:()=>l(!0),onOpenAuth:E,onOpenCart:()=>x(!0),onLogout:D,currentView:e,setView:t}),s.jsxs("main",{className:`site-content-page ${e==="home"?"view-home pt-0":"view-not-home pt-36 sm:pt-40 md:pt-36 lg:pt-32"} w-full max-w-full min-h-screen`,style:e==="home"?{}:{paddingTop:"140px"},children:[
   e==="home"&&s.jsx(Q_,{onOpenBooking:()=>l(!0),onAddToCart:T,onOpenAuth:E,setView:t}),
   e==="visagismo"&&s.jsx(VisagismoView,{setView:t,onOpenBooking:()=>l(!0),onOpenAuth:E,session:r}),
   e==="courses"&&s.jsx(CoursesView,{setView:t,onOpenAuth:E,session:r}),
