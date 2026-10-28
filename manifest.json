@@ -3,12 +3,14 @@
   "short_name": "Honorato Barber Shop",
   "description": "Barbearia Premium em Ituiutaba - MG. Agendamento online, bar lounge com sinuca, serviços de corte e barba e Clube VIP.",
   "start_url": "/",
+  "scope": "/",
   "id": "/",
-  "display": "fullscreen",
+  "display": "standalone",
   "display_override": ["fullscreen", "standalone", "minimal-ui"],
   "background_color": "#0B0B0B",
   "theme_color": "#0B0B0B",
   "orientation": "portrait",
+  "categories": ["lifestyle", "shopping", "beauty"],
   "icons": [
     {
       "src": "/logo.png",
