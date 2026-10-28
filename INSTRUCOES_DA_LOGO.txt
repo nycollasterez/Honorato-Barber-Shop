@@ -1,0 +1,16 @@
+=======================================================
+INSTRUÇÕES PARA ADICIONAR SUA LOGO ORIGINAL:
+=======================================================
+
+Para colocar a imagem da sua logo original sem que ela seja alterada ou redesenhada por código, siga estes passos simples:
+
+1. Prepare o arquivo de imagem da sua logo. Ele deve estar no formato PNG (com fundo transparente de preferência) ou JPG.
+2. Nomeie o arquivo exatamente como:
+   logo.png
+
+3. Envie ou arraste esse arquivo ("logo.png") para dentro desta pasta "public" aqui no painel do editor do AI Studio (à esquerda).
+
+Pronto!
+Assim que o arquivo "logo.png" for colocado dentro da pasta "public", o site irá carregar a sua logo original automaticamente em todos os locais (no topo/cabeçalho, no rodapé, etc.) sem mexer em nada dela!
+
+Se você ainda não tiver adicionado o arquivo, o site continuará exibindo a versão desenhada em vetor como garantia de que o site nunca fique sem logo.

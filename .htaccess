@@ -1,0 +1,73 @@
+# --------------------------------------------------------
+# React/Vite + PHP API + MySQL — HostGator/cPanel
+# --------------------------------------------------------
+
+DirectoryIndex index.html
+Options -Indexes +FollowSymLinks
+
+<IfModule mod_authz_core.c>
+  Require all granted
+</IfModule>
+
+# Tipos MIME dos arquivos gerados pelo Vite.
+<IfModule mod_mime.c>
+  AddType application/javascript .js .mjs
+  AddType text/css .css
+  AddType application/json .json
+  AddType image/svg+xml .svg
+  AddType image/webp .webp
+  AddType image/png .png
+  AddType image/jpeg .jpg .jpeg
+  AddType image/gif .gif
+  AddType image/x-icon .ico
+  AddType font/woff .woff
+  AddType font/woff2 .woff2
+  AddType font/ttf .ttf
+  AddType application/vnd.ms-fontobject .eot
+</IfModule>
+
+# Impede acesso público a arquivos de configuração, banco e versionamento.
+<FilesMatch "(^|/)\.(env|git)|\.env\..*|\.sql$|\.log$|^db_config\.php$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # HTTPS em acesso direto ou atrás de proxy reverso.
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !^https$ [NC]
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L,NE]
+
+  # API pública: /api e /api/... são processados exclusivamente pelo PHP.
+  RewriteRule ^api/?$ api.php?route= [QSA,L]
+  RewriteRule ^api/(.+)$ api.php?route=$1 [QSA,L]
+
+  # Arquivos e diretórios existentes são entregues diretamente pelo Apache.
+  # Isso cobre index.html, assets/, imagens/ e demais arquivos reais do build.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Assets inexistentes devem retornar 404 real, nunca o index.html.
+  RewriteCond %{REQUEST_URI} \.(?:js|mjs|css|map|json|png|jpe?g|gif|svg|webp|ico|avif|woff2?|ttf|eot|otf|mp4|webm|ogg|mp3|wav|pdf)$ [NC]
+  RewriteRule ^ - [R=404,L]
+
+  # O fallback SPA vale somente para navegação GET/HEAD que aceita HTML.
+  # Não alcança /api, arquivos existentes, diretórios existentes ou assets.
+  RewriteCond %{REQUEST_METHOD} ^(?:GET|HEAD)$
+  RewriteCond %{HTTP_ACCEPT} text/html [NC]
+  RewriteRule ^ index.html [L]
+</IfModule>
