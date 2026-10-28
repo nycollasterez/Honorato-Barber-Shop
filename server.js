@@ -231,8 +231,21 @@ function handleRequest(req, res) {
 
     if (route === 'login' && req.method === 'POST') {
       return readBody(input => {
-        const role = input.role || 'client';
-        const cleanPhone = (input.phone || '').replace(/\D/g, '');
+        const identifier = (input.phone || input.email || '').trim();
+        const cleanPhone = identifier.replace(/\D/g, '');
+        let role = input.role;
+
+        if (!role || role === 'unified') {
+          // Detecção automática de perfil
+          if (identifier.toLowerCase().includes('admin') || identifier.toLowerCase().includes('gerente') || cleanPhone.endsWith('0000')) {
+            role = 'admin';
+          } else if (identifier.toLowerCase().includes('barber') || identifier.toLowerCase().includes('erick') || identifier.toLowerCase().includes('carlos') || cleanPhone.endsWith('1111') || cleanPhone.endsWith('2222')) {
+            role = 'barber';
+          } else {
+            role = 'client';
+          }
+        }
+
         let name = 'Usuário';
 
         if (role === 'barber') {
@@ -241,7 +254,7 @@ function handleRequest(req, res) {
             id: 'barber-1',
             role: 'barber',
             name: name,
-            email: 'erick@honoratobarber.com',
+            email: identifier.includes('@') ? identifier : 'erick@honoratobarber.com',
             phone: input.phone || '(34) 99999-1111',
             barbearia_id: 'default'
           };
@@ -251,17 +264,17 @@ function handleRequest(req, res) {
             id: 'admin-1',
             role: 'admin',
             name: name,
-            email: 'admin@honoratobarber.com',
+            email: identifier.includes('@') ? identifier : 'admin@honoratobarber.com',
             phone: input.phone || '(34) 99999-0000',
             barbearia_id: 'default'
           };
         } else {
-          name = 'Cliente Local';
+          name = 'Cliente Honorato';
           currentSession = {
             id: 'client-1',
             role: 'client',
             name: name,
-            email: 'cliente@gmail.com',
+            email: identifier.includes('@') ? identifier : 'cliente@gmail.com',
             phone: input.phone || '(34) 99318-4075',
             barbearia_id: 'default'
           };

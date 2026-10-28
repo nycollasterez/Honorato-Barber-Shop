@@ -392,16 +392,14 @@ function handleLoginRoute($conn, $input) {
         return;
     }
 
-    $role = $input['role'] ?? 'client';
-    if (!in_array($role, ['admin', 'barber', 'client'], true)) {
-        http_response_code(400);
-        echo json_encode(["error" => "Perfil de acesso invalido."]);
-        return;
-    }
     $password = $input['password'] ?? '';
-    $phone = $input['phone'] ?? '';
-    $email = $input['email'] ?? '';
+    $phone = $input['phone'] ?? ($input['login'] ?? ($input['identifier'] ?? ''));
+    $email = $input['email'] ?? ($input['login'] ?? ($input['identifier'] ?? ''));
     
+    if (strpos($phone, '@') !== false) {
+        $email = $phone;
+    }
+
     $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
     
     // Verificação de Força Bruta
@@ -420,81 +418,69 @@ function handleLoginRoute($conn, $input) {
     
     $cleanPhone = preg_replace('/\D/', '', $phone);
     $user = null;
-    $table = '';
+    $authenticatedRole = null;
     
-    if ($role === 'admin') {
-        $table = 'admins';
-        if (!empty($phone)) {
-            $stmt = $conn->prepare("SELECT * FROM admins WHERE REPLACE(REPLACE(REPLACE(REPLACE(phone, ' ', ''), '-', ''), '(', ''), ')', '') = ? OR email = ?");
+    // Ordem de verificação unificada: Admins/Gerentes -> Barbeiros -> Clientes
+    $rolesToTry = ['admin', 'barber', 'client'];
+    if (!empty($input['role']) && in_array($input['role'], ['admin', 'barber', 'client'], true)) {
+        $rolesToTry = [$input['role']];
+    }
+    
+    foreach ($rolesToTry as $currentRole) {
+        $table = ($currentRole === 'admin') ? 'admins' : (($currentRole === 'barber') ? 'barbers' : 'clients');
+        
+        if (!empty($cleanPhone) && strlen($cleanPhone) >= 8) {
+            $stmt = $conn->prepare("SELECT * FROM $table WHERE REPLACE(REPLACE(REPLACE(REPLACE(phone, ' ', ''), '-', ''), '(', ''), ')', '') = ? OR email = ?");
             $stmt->bind_param("ss", $cleanPhone, $phone);
         } else {
-            $stmt = $conn->prepare("SELECT * FROM admins WHERE email = ?");
+            $stmt = $conn->prepare("SELECT * FROM $table WHERE email = ?");
             $stmt->bind_param("s", $email);
         }
-    } elseif ($role === 'barber') {
-        $table = 'barbers';
-        if (!empty($phone)) {
-            $stmt = $conn->prepare("SELECT * FROM barbers WHERE REPLACE(REPLACE(REPLACE(REPLACE(phone, ' ', ''), '-', ''), '(', ''), ')', '') = ? OR email = ?");
-            $stmt->bind_param("ss", $cleanPhone, $phone);
-        } else {
-            $stmt = $conn->prepare("SELECT * FROM barbers WHERE email = ?");
-            $stmt->bind_param("s", $email);
-        }
-    } else {
-        $table = 'clients';
-        if (!empty($phone)) {
-            $stmt = $conn->prepare("SELECT * FROM clients WHERE REPLACE(REPLACE(REPLACE(REPLACE(phone, ' ', ''), '-', ''), '(', ''), ')', '') = ? OR email = ?");
-            $stmt->bind_param("ss", $cleanPhone, $phone);
-        } else {
-            $stmt = $conn->prepare("SELECT * FROM clients WHERE email = ?");
-            $stmt->bind_param("s", $email);
+        
+        executeStmt($stmt);
+        $res = $stmt->get_result();
+        $candidate = $res->fetch_assoc();
+        
+        if ($candidate) {
+            $dbHash = $candidate['passwordHash'];
+            if (is_string($dbHash) && password_verify($password, $dbHash)) {
+                $user = $candidate;
+                $authenticatedRole = $currentRole;
+                break;
+            }
         }
     }
     
-    executeStmt($stmt);
-    $res = $stmt->get_result();
-    $user = $res->fetch_assoc();
-    
-    if ($user) {
-        $dbHash = $user['passwordHash'];
-        $authSuccess = false;
+    if ($user && $authenticatedRole) {
+        // Limpa tentativas de login erradas
+        $stmt = $conn->prepare("DELETE FROM login_attempts WHERE ip = ?");
+        $stmt->bind_param("s", $ip);
+        executeStmt($stmt);
         
-        // Somente hashes criados por password_hash() sao aceitos.
-        if (is_string($dbHash) && password_verify($password, $dbHash)) {
-            $authSuccess = true;
-        }
+        $barbearia_id = $user['barbearia_id'] ?? 'default';
+        session_regenerate_id(true);
+        $effectiveRole = ($authenticatedRole === 'admin' && ($user['id'] ?? '') === 'admin-caixa') ? 'cashier' : $authenticatedRole;
+        $_SESSION['user'] = [
+            "id" => $user['id'],
+            "role" => $effectiveRole,
+            "name" => $user['name'],
+            "email" => $user['email'],
+            "barbearia_id" => $barbearia_id
+        ];
         
-        if ($authSuccess) {
-            // Limpa tentativas de login erradas
-            $stmt = $conn->prepare("DELETE FROM login_attempts WHERE ip = ?");
-            $stmt->bind_param("s", $ip);
-            executeStmt($stmt);
-            
-            $barbearia_id = $user['barbearia_id'] ?? 'default';
-            session_regenerate_id(true);
-            $effectiveRole = ($role === 'admin' && ($user['id'] ?? '') === 'admin-caixa') ? 'cashier' : $role;
-            $_SESSION['user'] = [
-                "id" => $user['id'],
+        writeLog($conn, $user['id'], $barbearia_id, 'login', "Login realizado com sucesso ($effectiveRole) via IP: " . $ip);
+        
+        echo json_encode([
+            "success" => true,
+            "session" => [
                 "role" => $effectiveRole,
+                "id" => $user['id'],
                 "name" => $user['name'],
                 "email" => $user['email'],
                 "barbearia_id" => $barbearia_id
-            ];
-            
-            writeLog($conn, $user['id'], $barbearia_id, 'login', "Login realizado com sucesso via IP: " . $ip);
-            
-            echo json_encode([
-                "success" => true,
-                "session" => [
-                    "role" => $effectiveRole,
-                    "id" => $user['id'],
-                    "name" => $user['name'],
-                    "email" => $user['email'],
-                    "barbearia_id" => $barbearia_id
-                ]
-            ]);
-            return;
-        }
+            ]
+        ]);
+        return;
     }
     
     // Registra tentativa falha
@@ -519,10 +505,10 @@ function handleLoginRoute($conn, $input) {
         executeStmt($ins);
     }
     
-    writeLog($conn, null, 'default', 'login_failed', "Tentativa incorreta de login para cargo $role com identificador: " . ($phone ?: $email));
+    writeLog($conn, null, 'default', 'login_failed', "Tentativa incorreta de login com identificador: " . ($phone ?: $email));
     
     http_response_code(401);
-    echo json_encode(["error" => "Credenciais incorretas."]);
+    echo json_encode(["error" => "Celular/e-mail ou senha incorretos."]);
 }
 
 function handleLogoutRoute($conn) {
