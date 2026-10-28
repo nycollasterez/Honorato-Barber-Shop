@@ -456,19 +456,16 @@ Error generating stack: `+c.message+`
            M 250,274 C 220,274 185,268 155,262
            M 360,260 C 380,265 395,272 398,268
            M 140,260 C 120,265 105,272 102,268`,stroke:"#ffffff",strokeWidth:"1.5",strokeLinecap:"round",opacity:"0.75"})]}):s.jsx("img",{src:"/logo.png",className:`${e} object-contain`,alt:"Honorato Barber Shop Logo",onError:()=>r(!0)})}function X_({session:e,cartCount:t,onOpenAuth:r,onLogout:n,onOpenCart:i,onOpenBooking:l,currentView:u,setView:d}){
-  const[m,h]=xD.useState(!1);
-  const[isScrolled,setIsScrolled]=xD.useState(!1);
-  xD.useEffect(()=>{
-    const onScroll=()=>{setIsScrolled(window.scrollY>25)};
-    window.addEventListener("scroll",onScroll,{passive:!0});
-    return()=>window.removeEventListener("scroll",onScroll);
-  },[]);
+  const[m,h]=b.useState(!1);
   const navShortcuts=[
     {label:"Início",sub:"Principal",id:"nav-home",action:()=>{d("home");window.scrollTo({top:0,behavior:"smooth"})},active:u==="home"},
     {label:"Serviços",sub:"Cortes & Barba",id:"nav-services",action:()=>{d("home");setTimeout(()=>{var v;return(v=document.getElementById("services"))==null?void 0:v.scrollIntoView({behavior:"smooth"})},100)},active:!1},
     {label:"Visagismo",sub:"Consultoria",id:"nav-visagismo",badge:"Exclusivo",action:()=>{d("visagismo");window.scrollTo({top:0,behavior:"smooth"})},active:u==="visagismo"},
     {label:"Cursos",sub:"Academy EAD",id:"nav-courses",badge:"EAD",action:()=>{d("courses");window.scrollTo({top:0,behavior:"smooth"})},active:u==="courses"},
-    {label:"Equipe",sub:"Barbeiros",id:"nav-team",action:()=>{d("home");setTimeout(()=>{var v;return(v=document.getElementById("team"))==null?void 0:v.scrollIntoView({behavior:"smooth"})},100)},active:!1}
+    {label:"Loja",sub:"Produtos & Kits",id:"nav-store",badge:"Loja",action:()=>{d("store");window.scrollTo({top:0,behavior:"smooth"})},active:u==="store"},
+    {label:"Equipe",sub:"Barbeiros",id:"nav-team",action:()=>{d("home");setTimeout(()=>{var v;return(v=document.getElementById("team"))==null?void 0:v.scrollIntoView({behavior:"smooth"})},100)},active:!1},
+    {label:"Drinkeria",sub:"Bar Lounge",id:"nav-drinkeria",badge:"Bar",action:()=>{window.location.href="/drinkeria"},active:!1},
+    {label:"Localização",sub:"Como Chegar",id:"nav-location",action:()=>{d("home");setTimeout(()=>{var v;return(v=document.getElementById("location"))==null?void 0:v.scrollIntoView({behavior:"smooth"})},100)},active:!1}
   ];
 
   const handleDashboard=()=>{
@@ -480,89 +477,62 @@ Error generating stack: `+c.message+`
     }
   };
 
-  return s.jsxs("header",{className:"fixed top-0 left-0 right-0 z-50 bg-[#0B0B0B]/60 backdrop-blur-md border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)] transition-all",id:"main-navbar",children:[
-    s.jsx("div",{className:`w-full px-4 sm:px-6 lg:px-8 transition-all duration-300 ${isScrolled?"hidden md:block":"block"}`,children:s.jsxs("div",{className:"flex items-center justify-between h-20 gap-3 w-full",children:[
-      s.jsxs("div",{className:"flex items-center gap-2.5 sm:gap-3 cursor-pointer hover:opacity-90 transition-opacity shrink-0 flex-none select-none z-10",onClick:()=>{d("home");window.scrollTo({top:0,behavior:"smooth"})},id:"nav-logo",children:[
-        s.jsx(ND,{className:"h-9 w-9 sm:h-10 sm:w-10 transition-transform hover:scale-105 duration-300 shrink-0"}),
+  return s.jsxs("header",{className:"fixed top-0 left-0 right-0 z-50 bg-[#0B0B0B]/95 backdrop-blur-md border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.6)] transition-all",id:"main-navbar",children:[
+    // ROW 1: TOP BAR (Logo on the left, Login/Actions on the right)
+    s.jsx("div",{className:"w-full px-3 sm:px-6 lg:px-8 border-b border-neutral-800/60",children:s.jsxs("div",{className:"flex items-center justify-between h-16 sm:h-20 gap-3 w-full",children:[
+      s.jsxs("div",{className:"flex items-center gap-2.5 sm:gap-3 cursor-pointer hover:opacity-90 transition-opacity shrink-0 select-none",onClick:()=>{d("home");window.scrollTo({top:0,behavior:"smooth"})},id:"nav-logo",children:[
+        s.jsx(ND,{className:"h-9 w-9 sm:h-11 sm:w-11 transition-transform hover:scale-105 duration-300 shrink-0"}),
         s.jsxs("div",{className:"min-w-0",children:[
-          s.jsxs("span",{className:"font-sans font-bold text-base sm:text-lg tracking-wider text-white whitespace-nowrap block leading-tight",children:[
+          s.jsxs("span",{className:"font-sans font-bold text-base sm:text-lg lg:text-xl tracking-wider text-white whitespace-nowrap block leading-tight",children:[
             "HONORATO",
             s.jsx("span",{className:"text-[#B08D57]",children:" BARBER SHOP"})
           ]}),
           s.jsx("p",{className:"text-[8px] sm:text-[9px] font-mono tracking-[0.25em] text-neutral-400 uppercase block mt-0.5",children:"Barbearia Premium"})
         ]})
       ]}),
-
-      // DESKTOP & LAPTOP SHORTCUTS (VISIBLE FROM MD UP: 768px+)
-      s.jsx("div",{className:"hidden lg:flex items-center bg-[#141414]/95 border border-neutral-800 rounded-full px-2 py-1 shadow-xl shadow-black/40 gap-1 shrink min-w-0",children:navShortcuts.map((item,idx)=>s.jsxs("button",{
-        key:item.id,
-        onClick:item.action,
-        className:`px-2.5 lg:px-3.5 py-1.5 rounded-full text-xs lg:text-[13px] font-medium transition-all duration-200 cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
-          item.active
-            ?"bg-[#B08D57] text-black font-semibold shadow-md shadow-[#B08D57]/30"
-            :"text-neutral-100 hover:text-white hover:bg-neutral-800/80"
-        }`,
-        id:item.id,
-        children:[
-          item.label,
-          item.badge&&s.jsx("span",{
-            className:`text-[9px] font-mono font-bold px-1.5 py-0.2 rounded-full ${
-              item.active
-                ?"bg-black/30 text-black"
-                :"bg-[#B08D57]/25 text-[#E5C185] border border-[#B08D57]/40"
-            }`,
-            children:item.badge
-          })
-        ]
-      },idx))}),
-
-      // RIGHT ACTIONS
       s.jsxs("div",{className:"hidden md:flex items-center space-x-3 shrink-0",children:[
         s.jsxs("button",{onClick:i,className:"relative p-2.5 text-neutral-300 hover:text-white transition-colors cursor-pointer rounded-xl bg-neutral-900/80 border border-neutral-800 hover:border-neutral-700",id:"nav-cart-btn",title:"Carrinho",children:[
           s.jsx(Am,{className:"h-5 w-5"}),
           t>0&&s.jsx("span",{className:"absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#B08D57] text-[9px] font-bold text-black font-mono shadow",children:t})
         ]}),
-        e?s.jsxs("div",{className:"flex items-center space-x-2 bg-neutral-900/80 px-2.5 py-1.5 rounded-xl border border-neutral-800",id:"nav-session-widget",children:[
+        e?s.jsxs("div",{className:"flex items-center space-x-2 bg-neutral-900/80 px-3 py-1.5 rounded-xl border border-neutral-800",id:"nav-session-widget",children:[
           s.jsxs("button",{onClick:handleDashboard,className:"flex items-center gap-1.5 text-xs text-neutral-200 hover:text-[#B08D57] transition-colors cursor-pointer",children:[
             s.jsx(Is,{className:"h-3.5 w-3.5 text-[#B08D57]"}),
-            s.jsx("span",{className:"max-w-[100px] truncate font-medium",children:e.name.split(" ")[0]}),
+            s.jsx("span",{className:"max-w-[110px] truncate font-medium",children:e.name.split(" ")[0]}),
             s.jsx("span",{className:"text-[9px] uppercase tracking-wider bg-neutral-800 text-[#B08D57] px-1.5 py-0.5 rounded font-mono",children:e.role==="cashier"?"Caixa":e.role==="admin"?"Adm":e.role==="barber"?"Barbeiro":"Cliente"})
           ]}),
-          s.jsx("div",{className:"h-3 w-[1px] bg-neutral-700"}),
+          s.jsx("div",{className:"h-3.5 w-[1px] bg-neutral-700"}),
           s.jsx("button",{onClick:n,title:"Sair",className:"text-neutral-400 hover:text-red-400 p-0.5 rounded hover:bg-neutral-800 transition-colors cursor-pointer",id:"nav-logout-btn",children:s.jsx(MN,{className:"h-3.5 w-3.5"})})
-        ]}):s.jsxs("button",{onClick:()=>r(),className:"flex items-center gap-1.5 text-xs text-neutral-200 hover:text-white px-3 py-2 rounded-xl transition-colors cursor-pointer bg-neutral-900/60 border border-neutral-800 hover:border-neutral-700 font-medium",id:"nav-login-btn",children:[
-          s.jsx(Is,{className:"h-3.5 w-3.5 text-[#B08D57]"}),"Acessar Conta"
+        ]}):s.jsxs("button",{onClick:()=>r(),className:"flex items-center gap-1.5 text-xs text-neutral-200 hover:text-white px-3.5 py-2 rounded-xl transition-colors cursor-pointer bg-neutral-900/80 border border-neutral-800 hover:border-[#B08D57]/40 font-medium",id:"nav-login-btn",children:[
+          s.jsx(Is,{className:"h-4 w-4 text-[#B08D57]"}),"Acessar Conta"
         ]}),
         (e==null?void 0:e.role)==="admin"&&s.jsx("button",{onClick:()=>d("reception"),className:"flex items-center gap-1.5 text-xs font-semibold border border-[#B08D57]/30 bg-[#B08D57]/10 hover:bg-[#B08D57]/20 text-[#B08D57] px-3 py-2 rounded-xl transition-all cursor-pointer",id:"nav-reception-btn",children:"Recepção 💻"}),
         s.jsx("button",{onClick:l,className:"bg-[#B08D57] hover:bg-[#9E7B45] text-black text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl transition-all transform hover:-translate-y-0.5 cursor-pointer font-sans shadow-md hover:shadow-lg",id:"nav-book-btn",children:"Agendar horário"})
       ]}),
-
-      // MOBILE TOP BAR ICONS
       s.jsxs("div",{className:"flex md:hidden items-center space-x-2",children:[
-        s.jsxs("button",{onClick:i,className:"relative p-2.5 text-neutral-300 hover:text-white transition-colors cursor-pointer rounded-xl bg-neutral-900 border border-neutral-800",children:[
+        s.jsxs("button",{onClick:i,className:"relative p-2 text-neutral-300 hover:text-white transition-colors cursor-pointer rounded-xl bg-neutral-900 border border-neutral-800",children:[
           s.jsx(Am,{className:"h-5 w-5"}),
           t>0&&s.jsx("span",{className:"absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#B08D57] text-[9px] font-bold text-black font-mono shadow",children:t})
         ]}),
-        s.jsx("button",{onClick:()=>h(!m),className:"p-2.5 text-neutral-200 hover:text-white transition-colors rounded-xl bg-neutral-900 border border-neutral-800 cursor-pointer",children:m?s.jsx(Sr,{className:"h-6 w-6"}):s.jsx(t_,{className:"h-6 w-6"})})
+        s.jsx("button",{onClick:()=>h(!m),className:"p-2 text-neutral-200 hover:text-white transition-colors rounded-xl bg-neutral-900 border border-neutral-800 cursor-pointer",children:m?s.jsx(Sr,{className:"h-5 w-5"}):s.jsx(t_,{className:"h-5 w-5"})})
       ]})
     ]})}),
-
-    // ALWAYS-VISIBLE MOBILE HORIZONTAL SHORTCUT STRIP (SUB-NAVBAR ON MOBILE)
-    s.jsx("div",{className:"w-full max-w-full flex md:hidden items-center gap-2 overflow-x-auto no-scrollbar px-3 py-2 bg-black/45 backdrop-blur-md border-t border-white/5 shadow-inner",children:navShortcuts.map((item,idx)=>s.jsxs("button",{
+    // ROW 2: BOTTOM NAVIGATION BAR (All navigation shortcuts)
+    s.jsx("div",{className:"w-full bg-[#0E0E0E]/95 border-t border-white/5 py-1.5 px-3 sm:px-6 lg:px-8 overflow-x-auto no-scrollbar",children:s.jsx("div",{className:"max-w-7xl mx-auto flex items-center justify-start md:justify-center gap-1 sm:gap-2 min-w-max",children:navShortcuts.map((item,idx)=>s.jsxs("button",{
       key:item.id,
       onClick:item.action,
-      className:`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap shrink-0 flex items-center gap-1.5 transition-all cursor-pointer ${
+      className:`px-3 sm:px-4 py-1.5 rounded-lg text-xs sm:text-[13px] font-medium transition-all duration-200 cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
         item.active
-          ?"bg-[#B08D57] text-black font-semibold shadow-sm"
-          :"bg-neutral-900 border border-neutral-800 text-neutral-200 active:bg-neutral-800"
+          ?"bg-[#B08D57] text-black font-semibold shadow-md shadow-[#B08D57]/30"
+          :"text-neutral-300 hover:text-white hover:bg-neutral-800/80 active:bg-neutral-800"
       }`,
+      id:item.id,
       children:[
         item.label,
-        item.badge&&s.jsx("span",{className:`text-[8px] font-mono font-bold px-1 py-0.2 rounded ${item.active?"bg-black/30 text-black":"bg-[#B08D57]/20 text-[#E5C185]"}`,children:item.badge})
+        item.badge&&s.jsx("span",{className:`text-[9px] font-mono font-bold px-1.5 py-0.2 rounded ${item.active?"bg-black/30 text-black":"bg-[#B08D57]/20 text-[#E5C185] border border-[#B08D57]/30"}`,children:item.badge})
       ]
-    },idx))}),
-
-    // EXPANDABLE MOBILE MENU DRAWER
+    },idx))})}),
+    // MOBILE DRAWER
     m&&s.jsxs("div",{className:"md:hidden bg-[#0C0C0C]/98 border-b border-[#B08D57]/40 px-4 pt-3 pb-7 space-y-4 shadow-2xl backdrop-blur-2xl",id:"mobile-menu",children:[
       s.jsxs("div",{className:"flex items-center justify-between pb-2.5 border-b border-neutral-800/80 px-1",children:[
         s.jsxs("span",{className:"text-xs font-mono uppercase tracking-widest text-[#B08D57] flex items-center gap-1.5",children:[
@@ -571,7 +541,6 @@ Error generating stack: `+c.message+`
         ]}),
         s.jsx("span",{className:"text-[10px] text-neutral-400 font-mono",children:"Honorato Barber Shop"})
       ]}),
-
       s.jsx("div",{className:"grid grid-cols-2 gap-2.5",children:navShortcuts.map((item,idx)=>s.jsxs("button",{
         key:item.id,
         onClick:()=>{item.action();h(!1)},
@@ -588,7 +557,6 @@ Error generating stack: `+c.message+`
           s.jsx("span",{className:"text-[10px] text-neutral-400 font-mono mt-1",children:item.sub})
         ]
       },idx))}),
-
       s.jsxs("div",{className:"pt-2 space-y-2.5 border-t border-neutral-800/80",children:[
         e?s.jsxs("div",{className:"space-y-2",children:[
           s.jsxs("div",{className:"text-xs font-medium text-[#B08D57] flex items-center gap-1.5 px-2",children:[
@@ -609,6 +577,95 @@ Error generating stack: `+c.message+`
           s.jsx("span",{children:"💬"}),"WhatsApp da Barbearia"
         ]})
       ]})
+    ]})
+  ]});
+}
+function StoreView({setView:d,onAddToCart:t,onOpenBooking:l,onOpenAuth:E,session:r}){
+  const[products,setProducts]=b.useState([]);
+  const[selectedCategory,setSelectedCategory]=b.useState("Todos");
+  const[addedId,setAddedId]=b.useState(null);
+  const[searchQuery,setSearchQuery]=b.useState("");
+
+  b.useEffect(()=>{
+    const load=()=>{setProducts(ge.getProducts()||[])};
+    load();
+    window.addEventListener("premium_db_update",load);
+    return()=>window.removeEventListener("premium_db_update",load);
+  },[]);
+
+  const handleAddToCart=(prod)=>{
+    if(t)t(prod);
+    setAddedId(prod.id);
+    setTimeout(()=>setAddedId(null),1200);
+  };
+
+  const categories=["Todos","Cabelo","Barba","Kits & Pomadas"];
+
+  const filteredProducts=products.filter(p=>{
+    const matchCat=selectedCategory==="Todos"||(p.category&&p.category.toLowerCase()===selectedCategory.toLowerCase())||(selectedCategory==="Kits & Pomadas"&&(p.name.toLowerCase().includes("pomada")||p.name.toLowerCase().includes("kit")));
+    const matchSearch=!searchQuery||p.name.toLowerCase().includes(searchQuery.toLowerCase())||(p.description&&p.description.toLowerCase().includes(searchQuery.toLowerCase()));
+    return matchCat&&matchSearch;
+  });
+
+  return s.jsxs("div",{className:"min-h-screen bg-[#0B0B0B] text-white pt-6 pb-20",id:"store-page",children:[
+    s.jsx("div",{className:"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",children:s.jsxs("div",{className:"flex items-center justify-between py-4 border-b border-neutral-800/80 mb-8",children:[
+      s.jsxs("div",{className:"flex items-center gap-2 text-xs text-neutral-400",children:[
+        s.jsx("button",{onClick:()=>d("home"),className:"hover:text-[#B08D57] transition-colors cursor-pointer",children:"Início"}),
+        s.jsx("span",{children:"/"}),
+        s.jsx("span",{className:"text-white font-medium",children:"Loja Virtual & Home Care"})
+      ]}),
+      s.jsxs("button",{onClick:()=>d("home"),className:"flex items-center gap-1.5 text-xs text-neutral-400 hover:text-white px-3 py-1.5 rounded-lg border border-neutral-800 hover:border-neutral-700 transition-colors cursor-pointer",children:[
+        "← Voltar ao Início"
+      ]})
+    ]})}),
+    s.jsxs("div",{className:"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",children:[
+      s.jsxs("div",{className:"mb-10 text-center max-w-3xl mx-auto space-y-3",children:[
+        s.jsx("span",{className:"text-xs font-mono uppercase tracking-widest text-[#B08D57] font-bold px-3 py-1 bg-[#B08D57]/10 rounded-full border border-[#B08D57]/30",children:"Loja Oficial Honorato"}),
+        s.jsx("h1",{className:"text-3xl sm:text-5xl font-extrabold tracking-tight uppercase font-sans text-white",children:"PRODUTOS HOME CARE & POMADAS"}),
+        s.jsx("p",{className:"text-gray-400 text-sm sm:text-base",children:"Adquira pomadas, xampus, óleos e balms de alta performance para manter seu estilo e barba impecáveis em casa. Retire na barbearia ou receba com agilidade."})
+      ]}),
+      s.jsxs("div",{className:"flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 bg-[#121212] p-4 rounded-2xl border border-neutral-800",children:[
+        s.jsx("div",{className:"flex flex-wrap gap-2",children:categories.map(cat=>s.jsx("button",{key:cat,onClick:()=>setSelectedCategory(cat),className:`px-4 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${selectedCategory===cat?"bg-[#B08D57] text-black shadow-md shadow-[#B08D57]/20":"bg-neutral-900 text-gray-400 hover:text-white border border-neutral-800"}`,children:cat}))}),
+        s.jsx("div",{className:"w-full sm:w-64",children:s.jsx("input",{type:"text",placeholder:"Buscar produtos...",value:searchQuery,onChange:e=>setSearchQuery(e.target.value),className:"w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#B08D57]"})})
+      ]}),
+      filteredProducts.length===0?s.jsxs("div",{className:"text-center py-16 space-y-3 border border-neutral-800 rounded-2xl bg-neutral-950/40",children:[
+        s.jsx("p",{className:"text-neutral-400 text-sm",children:"Nenhum produto encontrado nesta categoria."}),
+        s.jsx("button",{onClick:()=>{setSelectedCategory("Todos");setSearchQuery("")},className:"text-xs text-[#B08D57] underline cursor-pointer",children:"Ver todos os produtos"})
+      ]}):s.jsx("div",{className:"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6",children:filteredProducts.map(prod=>{
+        const isOutOfStock=prod.stock<=0;
+        const isJustAdded=addedId===prod.id;
+        return s.jsxs("div",{key:prod.id,className:"bg-[#121212] border border-[#222] rounded-2xl p-4 flex flex-col justify-between group hover:border-[#B08D57]/50 transition-all duration-300 shadow-lg",children:[
+          s.jsxs("div",{children:[
+            s.jsxs("div",{className:"aspect-square rounded-xl overflow-hidden mb-3 relative border border-[#1c1c1c] bg-neutral-900",children:[
+              s.jsx("img",{src:prod.image,alt:prod.name,referrerPolicy:"no-referrer",onError:e=>{e.target.src="https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&q=80&w=400"},className:"w-full h-full object-cover filter brightness-95 group-hover:scale-105 transition-transform duration-500"}),
+              isOutOfStock&&s.jsx("div",{className:"absolute inset-0 bg-black/80 flex items-center justify-center",children:s.jsx("span",{className:"text-xs font-bold uppercase tracking-wider text-red-400 bg-red-950/40 border border-red-900/50 px-3 py-1 rounded-full font-mono",children:"Esgotado"})})
+            ]}),
+            s.jsxs("div",{className:"flex justify-between items-start gap-2",children:[
+              s.jsx("h3",{className:"font-bold text-sm text-white truncate max-w-[170px] font-sans",children:prod.name}),
+              s.jsx("span",{className:"text-[9px] uppercase font-mono tracking-widest bg-neutral-800 text-neutral-300 px-2 py-0.5 rounded-full border border-neutral-700",children:prod.category})
+            ]}),
+            s.jsx("p",{className:"text-xs text-gray-400 mt-2 leading-relaxed line-clamp-2 min-h-[32px]",children:prod.description})
+          ]}),
+          s.jsxs("div",{className:"mt-4 pt-3 border-t border-[#1c1c1c] space-y-3",children:[
+            s.jsxs("div",{className:"flex justify-between items-center",children:[
+              s.jsxs("span",{className:"text-xs text-gray-500 font-mono",children:["Estoque: ",prod.stock," un"]}),
+              s.jsxs("span",{className:"text-lg font-bold text-[#B08D57] font-mono",children:["R$ ",Number(prod.price).toFixed(2).replace(".",",")]})
+            ]}),
+            s.jsx("button",{
+              onClick:()=>handleAddToCart(prod),
+              disabled:isOutOfStock,
+              className:`w-full py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                isOutOfStock
+                  ?"bg-neutral-800/40 text-neutral-600 border border-neutral-800 cursor-not-allowed"
+                  :isJustAdded
+                    ?"bg-green-600 text-white shadow-md shadow-green-600/30"
+                    :"bg-neutral-900 border border-neutral-800 hover:border-[#B08D57] hover:bg-[#B08D57] hover:text-black text-white"
+              }`,
+              children:isOutOfStock?"Sem Estoque":isJustAdded?"✓ Adicionado!":"Adicionar ao Carrinho"
+            })
+          ]})
+        ]});
+      })})
     ]})
   ]});
 }
@@ -1423,9 +1480,10 @@ Cobrança recorrente Asaas`,value:Me,onChange:k=>ut(k.target.value),className:"w
 
 Reservamos os produtos para você. Por favor, faça a retirada e o pagamento diretamente no caixa da Honorato Barber Shop.`),t("client-dashboard"))},R=$=>{if(!j)return;const U={...j,status:"Concluido"};ge.addOrder(U),A([]),x(!1),w(!1);const ue=$.method==="pix"?"via Pix":`via Cartão de Crédito (fim ${$.last4||"••••"})`;alert(`Seu pagamento ${ue} foi aprovado com sucesso!
 
-Seu pedido #${U.id} foi registrado como PAGO e já está sendo preparado pela equipe da Honorato Barber Shop para retirada rápida!`),t("client-dashboard")},V=()=>{alert("Seu agendamento foi computado com sucesso no sistema da Honorato Barber Shop! Aguardamos você!"),r&&r.role==="client"&&t("client-dashboard")};return s.jsxs("div",{className:"bg-[#0B0B0B] min-h-screen text-white relative w-full max-w-full overflow-x-hidden",children:[s.jsx(X_,{session:r,cartCount:S.reduce(($,U)=>$+U.quantity,0),onOpenBooking:()=>l(!0),onOpenAuth:E,onOpenCart:()=>x(!0),onLogout:D,currentView:e,setView:t}),s.jsxs("main",{className:`site-content-page ${e==="home"?"view-home pt-0":"view-not-home pt-36 sm:pt-40 md:pt-36 lg:pt-32"} w-full max-w-full min-h-screen`,style:e==="home"?{}:{paddingTop:"140px"},children:[
+Seu pedido #${U.id} foi registrado como PAGO e já está sendo preparado pela equipe da Honorato Barber Shop para retirada rápida!`),t("client-dashboard")},V=()=>{alert("Seu agendamento foi computado com sucesso no sistema da Honorato Barber Shop! Aguardamos você!"),r&&r.role==="client"&&t("client-dashboard")};return s.jsxs("div",{className:"bg-[#0B0B0B] min-h-screen text-white relative w-full max-w-full overflow-x-hidden",children:[s.jsx(X_,{session:r,cartCount:S.reduce(($,U)=>$+U.quantity,0),onOpenBooking:()=>l(!0),onOpenAuth:E,onOpenCart:()=>x(!0),onLogout:D,currentView:e,setView:t}),s.jsxs("main",{className:`site-content-page ${e==="home"?"view-home pt-0":"view-not-home pt-36 sm:pt-40 md:pt-36 lg:pt-32"} w-full max-w-full min-h-screen`,style:e==="home"?{}:{paddingTop:"150px"},children:[
   e==="home"&&s.jsx(Q_,{onOpenBooking:()=>l(!0),onAddToCart:T,onOpenAuth:E,setView:t}),
   e==="visagismo"&&s.jsx(VisagismoView,{setView:t,onOpenBooking:()=>l(!0),onOpenAuth:E,session:r}),
+  e==="store"&&s.jsx(StoreView,{setView:t,onAddToCart:T,onOpenBooking:()=>l(!0),onOpenAuth:E,session:r}),
   e==="courses"&&s.jsx(CoursesView,{setView:t,onOpenAuth:E,session:r}),
   e==="client-dashboard"&&r&&s.jsx(JI,{session:r,setView:t}),
   e==="barber-dashboard"&&r&&s.jsx(e9,{session:r,setView:t,onLogout:D}),

@@ -431,6 +431,14 @@ function handleRequest(req, res) {
   if (targetPath === '/') targetPath = '/index.html';
   let filePath = path.join(__dirname, targetPath);
 
+  // If path is a directory and has index.html, serve it (e.g. /drinkeria)
+  if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
+    const dirIndex = path.join(filePath, 'index.html');
+    if (fs.existsSync(dirIndex)) {
+      filePath = dirIndex;
+    }
+  }
+
   // If path doesn't exist and has no extension, fallback to index.html (SPA)
   if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
     if (!path.extname(targetPath)) {
