@@ -1267,7 +1267,7 @@ function CoursesView({setView:d,onOpenAuth:E,session:r}){
       }),
       s.jsx("h1",{
         className:"hero-giant-title relative z-10 font-serif uppercase text-center",
-        style:{fontSize:"clamp(3.8rem, 14vw, 13rem)",color:"#C5A059",lineHeight:"0.92",letterSpacing:"0.08em",fontWeight:"900",textShadow:"0 15px 50px rgba(0,0,0,0.95)"},
+        style:{fontSize:"clamp(3.8rem, 14vw, 13rem)",color:"#FFFFFF",lineHeight:"0.92",letterSpacing:"0.08em",fontWeight:"900",textShadow:"0 15px 50px rgba(0,0,0,0.95)"},
         children:"HONORATO"
       })
     ]}),
