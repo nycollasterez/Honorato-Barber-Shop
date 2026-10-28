@@ -66,6 +66,20 @@
         backdrop-filter: blur(12px) !important;
         -webkit-backdrop-filter: blur(12px) !important;
       }
+      /* Fundo solido fixo no topo do site para o cabecalho no estado inicial */
+      #top-header-solid-bg {
+        width: 100% !important;
+        height: 128px !important;
+        background-color: #0B0B0B !important;
+        display: block !important;
+        position: relative !important;
+        z-index: 10 !important;
+      }
+      @media (max-width: 640px) {
+        #top-header-solid-bg {
+          height: 112px !important;
+        }
+      }
       /* Espacamento do cabecalho duplo garantido para todas as abas fora a home */
       main.site-content-page.view-not-home {
         padding-top: 140px !important;
