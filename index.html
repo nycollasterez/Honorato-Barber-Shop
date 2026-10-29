@@ -92,12 +92,25 @@
         text-shadow: 0 4px 20px rgba(0, 0, 0, 0.95) !important;
         display: block !important;
       }
+      .hero-title-box {
+        position: relative !important;
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
       .hero-skull-mask {
+        position: absolute !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        margin: 0 !important;
         width: clamp(260px, 48vw, 680px) !important;
         height: clamp(260px, 48vw, 680px) !important;
         object-fit: contain !important;
         opacity: 0.5 !important;
         pointer-events: none !important;
+        z-index: 0 !important;
         filter: drop-shadow(0 10px 35px rgba(0,0,0,0.85)) !important;
       }
       /* Ajuste especifico para celular: centraliza perfeitamente a caveira, evita corte nas bordas e sobe o conteudo */
@@ -133,17 +146,19 @@
           position: absolute !important;
           left: 50% !important;
           top: 50% !important;
-          transform: translate(-50%, -50%) !important;
-          width: clamp(200px, 58vw, 290px) !important;
-          height: clamp(200px, 58vw, 290px) !important;
+          transform: translate(-50%, -52%) !important;
+          width: clamp(210px, 58vw, 300px) !important;
+          height: clamp(210px, 58vw, 300px) !important;
           max-width: 85vw !important;
           margin: 0 !important;
           pointer-events: none !important;
           z-index: 0 !important;
         }
         .hero-giant-title {
-          font-size: clamp(2.15rem, 10.6vw, 3.4rem) !important;
-          letter-spacing: 0.02em !important;
+          position: relative !important;
+          z-index: 10 !important;
+          font-size: clamp(1.95rem, 9.6vw, 3.1rem) !important;
+          letter-spacing: 0.03em !important;
           line-height: 1 !important;
           white-space: nowrap !important;
           width: auto !important;

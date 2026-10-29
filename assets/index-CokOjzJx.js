@@ -1258,16 +1258,16 @@ function CoursesView({setView:d,onOpenAuth:E,session:r}){
   // CONTEÚDO HERO CENTRALIZADO
   s.jsxs("div",{className:"hero-content-container relative z-10 max-w-7xl mx-auto text-center px-4 sm:px-6 flex flex-col items-center justify-center select-none w-full",children:[
     // WRAPPER COM A CAVEIRA (LOGO) EM 50% ATRÁS DO NOME HONORATO GIGANTE
-    s.jsxs("div",{className:"hero-title-box relative w-full flex items-center justify-center my-3 sm:my-6",children:[
+    s.jsxs("div",{className:"hero-title-box relative w-full flex items-center justify-center my-3 sm:my-6",style:{position:"relative",width:"100%",display:"flex",alignItems:"center",justifyContent:"center"},children:[
       s.jsx("img",{
         src:"/logo.png",
         alt:"Logo Caveira Honorato",
-        className:"hero-skull-mask absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0",
-        style:{width:"clamp(260px, 48vw, 680px)",height:"clamp(260px, 48vw, 680px)",objectFit:"contain",opacity:0.5}
+        className:"hero-skull-mask pointer-events-none z-0",
+        style:{position:"absolute",left:"50%",top:"50%",transform:"translate(-50%,-50%)",width:"clamp(240px, 50vw, 650px)",height:"clamp(240px, 50vw, 650px)",objectFit:"contain",opacity:0.5,pointerEvents:"none",zIndex:0}
       }),
       s.jsx("h1",{
         className:"hero-giant-title relative z-10 font-serif uppercase text-center",
-        style:{fontSize:"clamp(3.8rem, 14vw, 13rem)",color:"#FFFFFF",lineHeight:"0.92",letterSpacing:"0.08em",fontWeight:"900",textShadow:"0 15px 50px rgba(0,0,0,0.95)"},
+        style:{position:"relative",zIndex:10,color:"#FFFFFF",fontWeight:"900",textShadow:"0 15px 50px rgba(0,0,0,0.95), 0 2px 10px rgba(0,0,0,0.9)"},
         children:"HONORATO"
       })
     ]}),
